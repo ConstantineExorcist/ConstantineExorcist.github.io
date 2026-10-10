@@ -128,3 +128,105 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .cig .ember, .cig .smoke i
+ { animation: none; }
+    .cig .smoke i { opacity: .25; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>John <span>Constantine</span></h1>
+    <p class="tag">Trench coat, loose tie, bad habits. This Halloween I'm the cheapest magician in London.</p>
+    <div class="cig" aria-hidden="true">
+      <div class="filter"></div>
+      <div class="paper"></div>
+      <div class="ember"></div>
+      <div class="smoke"><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="tabs" role="tablist" aria-label="Costume sections">
+    <button role="tab" id="tab-costume" aria-controls="panel-costume" aria-selected="true">Costume</button>
+    <button role="tab" id="tab-gear" aria-controls="panel-gear" aria-selected="false">Equipment</button>
+  </div>
+
+  <div class="panel" role="tabpanel" id="panel-costume" aria-labelledby="tab-costume">
+
+  <section id="exorcisms">
+    <h2>Exorcisms Completed</h2>
+    <p class="sub">The night's tally. Tap when another one has been sent back.</p>
+    <div class="tally">
+      <b id="tally" aria-live="polite">0</b>
+      <div class="btns">
+        <button type="button" id="plus">Add one</button>
+        <button type="button" id="minus" class="ghost">Undo</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="who" class="orig">
+    <h2>Who He Is</h2>
+    <div class="prose">
+      <p>John Constantine is the lead of DC Comics' <em>Hellblazer</em>: a working-class occultist from Liverpool who lives in London and survives on cunning, nerve and a pack of cigarettes. He is rarely the strongest person in a room, so he wins by lying well and thinking three moves ahead.</p>
+      <p>The look is what makes him easy to spot in a crowd: a rumpled trench coat, a loosened tie, a tired face and a cigarette that never seems to leave his hand.</p>
+    </div>
+  </section>
+
+  </div>
+
+  <div class="panel" role="tabpanel" id="panel-gear" aria-labelledby="tab-gear" hidden>
+    <section class="orig">
+      <h2>Equipment</h2>
+      <p class="sub">What I'm carrying on me.</p>
+      <ul class="gear">
+        <li><strong>Zippo lighter</strong><span>The signature prop. Flick it open for the pose.</span></li>
+        <li><strong>Cigarettes</strong><span>A pack on me at all times, the way he never goes anywhere without one.</span></li>
+        <li><strong>Trench coat (khaki)</strong><span>The centerpiece, worn open over the shirt and loose tie.</span></li>
+        <li><strong>Business cards</strong><span>Handed out in character to anyone who needs a professional in the dark arts.</span></li>
+      </ul>
+    </section>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">Built for Halloween 2026. Hosted on GitHub Pages.</div>
+</footer>
+
+<script>
+  // Tabs
+  (function () {
+    var tabs = document.querySelectorAll('.tabs [role="tab"]');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (o) {
+          var on = o === t;
+          o.setAttribute('aria-selected', on ? 'true' : 'false');
+          document.getElementById(o.getAttribute('aria-controls')).hidden = !on;
+        });
+      });
+    });
+  })();
+
+  // Exorcism tally, remembered in this browser only
+  (function () {
+    var out = document.getElementById('tally');
+    var n = 0;
+    try { n = parseInt(localStorage.getItem('constantine-exorcisms'), 10) || 0; } catch (e) {}
+    function show() {
+      out.textContent = n;
+      try { localStorage.setItem('constantine-exorcisms', String(n)); } catch (e) {}
+    }
+    document.getElementById('plus').addEventListener('click', function () { n++; show(); });
+    document.getElementById('minus').addEventListener('click', function () { n = Math.max(0, n - 1); show(); });
+    out.textContent = n;
+  })();
+
+</script>
+</body>
+</html>
