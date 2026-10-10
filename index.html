@@ -9,13 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
+    /* Black and red (background, cigarette, tally number, lines) */
     --ash: #000000;
-    --smoke: #141414;
     --newsprint: #ece8e8;
     --trench: #c8102e;
     --ember: #ff1f1f;
     --muted: #9a9a9a;
     --line: #2a2a2a;
+
+    /* Original colors, kept for the title, buttons, tabs, Equipment and Who He Is */
+    --o-ink: #1d1a17;
+    --o-smoke: #2a2622;
+    --o-newsprint: #e6dcc3;
+    --o-trench: #b59a6a;
+    --o-ember: #ff5a1f;
+    --o-muted: #a39b88;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -38,9 +46,10 @@
     line-height: 0.95;
     margin: 0 0 24px;
     letter-spacing: -1px;
+    color: var(--o-newsprint);
   }
-  .hero h1 span { display: block; color: var(--trench); }
-  .hero p.tag { max-width: 34ch; font-size: 1.45rem; font-style: italic; color: var(--muted); margin: 0; }
+  .hero h1 span { display: block; color: var(--o-trench); }
+  .hero p.tag { max-width: 34ch; font-size: 1.45rem; font-style: italic; color: var(--o-muted); margin: 0; }
 
   /* Cigarette: the one memorable moment */
   .cig { position: relative; display: flex; align-items: center; margin: 48px 0 0; height: 60px; }
@@ -77,17 +86,21 @@
   }
   .sub { color: var(--muted); margin: 0 0 28px; }
 
+  /* Sections that keep the original colors (Who He Is, Equipment) */
+  .orig { color: var(--o-newsprint); }
+  .orig .sub { color: var(--o-muted); }
+
   /* Tally */
   .tally { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
   .tally b { font-family: 'Special Elite', monospace; font-weight: 400; font-size: 5rem; line-height: 1; color: var(--ember); min-width: 1.5ch; }
   .btns { display: flex; gap: 12px; }
   .btns button {
     font-family: 'Special Elite', 'Courier New', monospace; font-size: 1.1rem;
-    background: var(--ember); color: var(--ash); border: 2px solid var(--ember);
+    background: var(--o-ember); color: var(--o-ink); border: 2px solid var(--o-ember);
     padding: 10px 22px; cursor: pointer;
   }
-  .btns button.ghost { background: transparent; color: var(--newsprint); border-color: var(--trench); }
-  .btns button:focus-visible { outline: 3px solid var(--newsprint); outline-offset: 2px; }
+  .btns button.ghost { background: transparent; color: var(--o-newsprint); border-color: var(--o-trench); }
+  .btns button:focus-visible { outline: 3px solid var(--o-newsprint); outline-offset: 2px; }
 
   /* Prose */
   .prose p { max-width: 62ch; margin: 0 0 1.1em; }
@@ -97,122 +110,21 @@
   .tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--line); margin-top: 8px; }
   .tabs button {
     font-family: 'Special Elite', 'Courier New', monospace; font-size: 1.15rem;
-    color: var(--muted); background: none; border: 0; border-bottom: 3px solid transparent;
+    color: var(--o-muted); background: none; border: 0; border-bottom: 3px solid transparent;
     padding: 12px 18px; cursor: pointer;
   }
-  .tabs button[aria-selected="true"] { color: var(--newsprint); border-bottom-color: var(--ember); }
-  .tabs button:focus-visible { outline: 3px solid var(--newsprint); outline-offset: -3px; }
+  .tabs button[aria-selected="true"] { color: var(--o-newsprint); border-bottom-color: var(--o-ember); }
+  .tabs button:focus-visible { outline: 3px solid var(--o-newsprint); outline-offset: -3px; }
   .panel > section:first-child { border-top: 0; }
 
   /* Equipment */
   .gear { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-  .gear li { background: var(--smoke); padding: 16px 18px; border-left: 4px solid var(--ember); }
+  .gear li { background: var(--o-smoke); padding: 16px 18px; border-left: 4px solid var(--o-ember); }
   .gear strong { display: block; font-weight: 600; }
-  .gear span { color: var(--muted); font-size: 1.05rem; line-height: 1.5; display: block; }
+  .gear span { color: var(--o-muted); font-size: 1.05rem; line-height: 1.5; display: block; }
 
   footer { padding: 36px 0 56px; border-top: 1px solid var(--line); color: var(--muted); font-size: 1rem; }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .cig .ember, .cig .smoke i { animation: none; }
-    .cig .smoke i { opacity: .25; }
-  }
-</style>
-</head>
-<body>
-
-<header class="hero">
-  <div class="wrap">
-    <h1>John <span>Constantine</span></h1>
-    <p class="tag">Trench coat, loose tie, bad habits. This Halloween I'm the cheapest magician in London.</p>
-    <div class="cig" aria-hidden="true">
-      <div class="filter"></div>
-      <div class="paper"></div>
-      <div class="ember"></div>
-      <div class="smoke"><i></i><i></i><i></i></div>
-    </div>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <div class="tabs" role="tablist" aria-label="Costume sections">
-    <button role="tab" id="tab-costume" aria-controls="panel-costume" aria-selected="true">Costume</button>
-    <button role="tab" id="tab-gear" aria-controls="panel-gear" aria-selected="false">Equipment</button>
-  </div>
-
-  <div class="panel" role="tabpanel" id="panel-costume" aria-labelledby="tab-costume">
-
-  <section id="exorcisms">
-    <h2>Exorcisms Completed</h2>
-    <p class="sub">The night's tally. Tap when another one has been sent back.</p>
-    <div class="tally">
-      <b id="tally" aria-live="polite">0</b>
-      <div class="btns">
-        <button type="button" id="plus">Add one</button>
-        <button type="button" id="minus" class="ghost">Undo</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="who">
-    <h2>Who He Is</h2>
-    <div class="prose">
-      <p>John Constantine is the lead of DC Comics' <em>Hellblazer</em>: a working-class occultist from Liverpool who lives in London and survives on cunning, nerve and a pack of cigarettes. He is rarely the strongest person in a room, so he wins by lying well and thinking three moves ahead.</p>
-      <p>The look is what makes him easy to spot in a crowd: a rumpled trench coat, a loosened tie, a tired face and a cigarette that never seems to leave his hand.</p>
-    </div>
-  </section>
-
-  </div>
-
-  <div class="panel" role="tabpanel" id="panel-gear" aria-labelledby="tab-gear" hidden>
-    <section>
-      <h2>Equipment</h2>
-      <p class="sub">What I'm carrying on me.</p>
-      <ul class="gear">
-        <li><strong>Zippo lighter</strong><span>The signature prop. Flick it open for the pose.</span></li>
-        <li><strong>Cigarettes</strong><span>A pack on me at all times, the way he never goes anywhere without one.</span></li>
-        <li><strong>Trench coat (khaki)</strong><span>The centerpiece, worn open over the shirt and loose tie.</span></li>
-        <li><strong>Business cards</strong><span>Handed out in character to anyone who needs a professional in the dark arts.</span></li>
-      </ul>
-    </section>
-  </div>
-
-</main>
-
-<footer>
-  <div class="wrap">Built for Halloween 2026. Hosted on GitHub Pages.</div>
-</footer>
-
-<script>
-  // Tabs
-  (function () {
-    var tabs = document.querySelectorAll('.tabs [role="tab"]');
-    tabs.forEach(function (t) {
-      t.addEventListener('click', function () {
-        tabs.forEach(function (o) {
-          var on = o === t;
-          o.setAttribute('aria-selected', on ? 'true' : 'false');
-          document.getElementById(o.getAttribute('aria-controls')).hidden = !on;
-        });
-      });
-    });
-  })();
-
-  // Exorcism tally, remembered in this browser only
-  (function () {
-    var out = document.getElementById('tally');
-    var n = 0;
-    try { n = parseInt(localStorage.getItem('constantine-exorcisms'), 10) || 0; } catch (e) {}
-    function show() {
-      out.textContent = n;
-      try { localStorage.setItem('constantine-exorcisms', String(n)); } catch (e) {}
-    }
-    document.getElementById('plus').addEventListener('click', function () { n++; show(); });
-    document.getElementById('minus').addEventListener('click', function () { n = Math.max(0, n - 1); show(); });
-    out.textContent = n;
-  })();
-
-</script>
-</body>
-</html>
+    .cig .ember, .cig .smoke i
