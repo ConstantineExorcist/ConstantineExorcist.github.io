@@ -1,17 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Website</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>John Constantine | My Halloween Costume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ash: #000000;
+    --smoke: #141414;
+    --newsprint: #ece8e8;
+    --trench: #c8102e;
+    --ember: #ff1f1f;
+    --muted: #9a9a9a;
+    --line: #2a2a2a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--ash);
+    color: var(--newsprint);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 1.25rem;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero { padding: 72px 0 40px; }
+  .hero h1 {
+    font-family: 'Special Elite', 'Courier New', monospace;
+    font-weight: 400;
+    font-size: clamp(3.2rem, 12vw, 7rem);
+    line-height: 0.95;
+    margin: 0 0 24px;
+    letter-spacing: -1px;
+  }
+  .hero h1 span { display: block; color: var(--trench); }
+  .hero p.tag { max-width: 34ch; font-size: 1.45rem; font-style: italic; color: var(--muted); margin: 0; }
+
+  /* Cigarette: the one memorable moment */
+  .cig { position: relative; display: flex; align-items: center; margin: 48px 0 0; height: 60px; }
+  .cig .paper { flex: 0 0 min(60%, 420px); height: 12px; background: var(--newsprint); border-radius: 2px 0 0 2px; }
+  .cig .filter { width: 70px; height: 12px; background: var(--trench); order: -1; border-radius: 2px 0 0 2px; }
+  .cig .ember {
+    width: 14px; height: 12px; border-radius: 0 3px 3px 0;
+    background: var(--ember);
+    box-shadow: 0 0 14px 4px rgba(255, 31, 31, .7);
+    animation: glow 3.2s ease-in-out infinite;
+  }
+  .cig .smoke { position: absolute; right: calc(100% - min(60%, 420px) - 84px); bottom: 24px; width: 40px; height: 120px; pointer-events: none; }
+  .cig .smoke i {
+    position: absolute; bottom: 0; left: 0; width: 18px; height: 18px; border-radius: 50%;
+    background: rgba(236, 232, 232, .18); filter: blur(6px); opacity: 0;
+    animation: rise 6s ease-out infinite;
+  }
+  .cig .smoke i:nth-child(2) { animation-delay: 2s; left: 8px; }
+  .cig .smoke i:nth-child(3) { animation-delay: 4s; left: -4px; }
+  @keyframes glow { 0%,100% { opacity: .75; } 50% { opacity: 1; } }
+  @keyframes rise {
+    0% { transform: translate(0,0) scale(.6); opacity: 0; }
+    20% { opacity: .7; }
+    100% { transform: translate(30px,-120px) scale(2.6); opacity: 0; }
+  }
+
+  /* Sections */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 {
+    font-family: 'Special Elite', 'Courier New', monospace;
+    font-weight: 400;
+    font-size: 2rem;
+    margin: 0 0 8px;
+  }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+
+  /* Tally */
+  .tally { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
+  .tally b { font-family: 'Special Elite', monospace; font-weight: 400; font-size: 5rem; line-height: 1; color: var(--ember); min-width: 1.5ch; }
+  .btns { display: flex; gap: 12px; }
+  .btns button {
+    font-family: 'Special Elite', 'Courier New', monospace; font-size: 1.1rem;
+    background: var(--ember); color: var(--ash); border: 2px solid var(--ember);
+    padding: 10px 22px; cursor: pointer;
+  }
+  .btns button.ghost { background: transparent; color: var(--newsprint); border-color: var(--trench); }
+  .btns button:focus-visible { outline: 3px solid var(--newsprint); outline-offset: 2px; }
+
+  /* Prose */
+  .prose p { max-width: 62ch; margin: 0 0 1.1em; }
+
+  /* Tabs */
+  [hidden] { display: none !important; }
+  .tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--line); margin-top: 8px; }
+  .tabs button {
+    font-family: 'Special Elite', 'Courier New', monospace; font-size: 1.15rem;
+    color: var(--muted); background: none; border: 0; border-bottom: 3px solid transparent;
+    padding: 12px 18px; cursor: pointer;
+  }
+  .tabs button[aria-selected="true"] { color: var(--newsprint); border-bottom-color: var(--ember); }
+  .tabs button:focus-visible { outline: 3px solid var(--newsprint); outline-offset: -3px; }
+  .panel > section:first-child { border-top: 0; }
+
+  /* Equipment */
+  .gear { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .gear li { background: var(--smoke); padding: 16px 18px; border-left: 4px solid var(--ember); }
+  .gear strong { display: block; font-weight: 600; }
+  .gear span { color: var(--muted); font-size: 1.05rem; line-height: 1.5; display: block; }
+
+  footer { padding: 36px 0 56px; border-top: 1px solid var(--line); color: var(--muted); font-size: 1rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cig .ember, .cig .smoke i { animation: none; }
+    .cig .smoke i { opacity: .25; }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Welcome to my site</h1>
-  </header>
-  <main>
-    <p>This is my first website, hosted on GitHub Pages.</p>
-  </main>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>John <span>Constantine</span></h1>
+    <p class="tag">Trench coat, loose tie, bad habits. This Halloween I'm the cheapest magician in London.</p>
+    <div class="cig" aria-hidden="true">
+      <div class="filter"></div>
+      <div class="paper"></div>
+      <div class="ember"></div>
+      <div class="smoke"><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="tabs" role="tablist" aria-label="Costume sections">
+    <button role="tab" id="tab-costume" aria-controls="panel-costume" aria-selected="true">Costume</button>
+    <button role="tab" id="tab-gear" aria-controls="panel-gear" aria-selected="false">Equipment</button>
+  </div>
+
+  <div class="panel" role="tabpanel" id="panel-costume" aria-labelledby="tab-costume">
+
+  <section id="exorcisms">
+    <h2>Exorcisms Completed</h2>
+    <p class="sub">The night's tally. Tap when another one has been sent back.</p>
+    <div class="tally">
+      <b id="tally" aria-live="polite">0</b>
+      <div class="btns">
+        <button type="button" id="plus">Add one</button>
+        <button type="button" id="minus" class="ghost">Undo</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="who">
+    <h2>Who He Is</h2>
+    <div class="prose">
+      <p>John Constantine is the lead of DC Comics' <em>Hellblazer</em>: a working-class occultist from Liverpool who lives in London and survives on cunning, nerve and a pack of cigarettes. He is rarely the strongest person in a room, so he wins by lying well and thinking three moves ahead.</p>
+      <p>The look is what makes him easy to spot in a crowd: a rumpled trench coat, a loosened tie, a tired face and a cigarette that never seems to leave his hand.</p>
+    </div>
+  </section>
+
+  </div>
+
+  <div class="panel" role="tabpanel" id="panel-gear" aria-labelledby="tab-gear" hidden>
+    <section>
+      <h2>Equipment</h2>
+      <p class="sub">What I'm carrying on me.</p>
+      <ul class="gear">
+        <li><strong>Zippo lighter</strong><span>The signature prop. Flick it open for the pose.</span></li>
+        <li><strong>Cigarettes</strong><span>A pack on me at all times, the way he never goes anywhere without one.</span></li>
+        <li><strong>Trench coat (khaki)</strong><span>The centerpiece, worn open over the shirt and loose tie.</span></li>
+        <li><strong>Business cards</strong><span>Handed out in character to anyone who needs a professional in the dark arts.</span></li>
+      </ul>
+    </section>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">Built for Halloween 2026. Hosted on GitHub Pages.</div>
+</footer>
+
+<script>
+  // Tabs
+  (function () {
+    var tabs = document.querySelectorAll('.tabs [role="tab"]');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (o) {
+          var on = o === t;
+          o.setAttribute('aria-selected', on ? 'true' : 'false');
+          document.getElementById(o.getAttribute('aria-controls')).hidden = !on;
+        });
+      });
+    });
+  })();
+
+  // Exorcism tally, remembered in this browser only
+  (function () {
+    var out = document.getElementById('tally');
+    var n = 0;
+    try { n = parseInt(localStorage.getItem('constantine-exorcisms'), 10) || 0; } catch (e) {}
+    function show() {
+      out.textContent = n;
+      try { localStorage.setItem('constantine-exorcisms', String(n)); } catch (e) {}
+    }
+    document.getElementById('plus').addEventListener('click', function () { n++; show(); });
+    document.getElementById('minus').addEventListener('click', function () { n = Math.max(0, n - 1); show(); });
+    out.textContent = n;
+  })();
+
+</script>
 </body>
 </html>
